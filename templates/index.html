@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="{{ direction }}">
+<head>
+  <meta charset="UTF-8">
+  <title>صفحة المصحف</title>
+  <style>
+    body {
+      font-family: "Amiri", serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      direction: {{ direction }};
+    }
+    .image-container {
+      flex: 1;
+      text-align: center;
+      background: #f9f9f9;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    .sidebar {
+      width: 30%;
+      background: #eef;
+      overflow-y: auto;
+      padding: 15px;
+      box-shadow: 0 0 5px #aaa;
+    }
+    .entry {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .entry strong {
+      color: #333;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin: 10px 0;
+    }
+    .nav-buttons a {
+      text-decoration: none;
+      padding: 8px 16px;
+      margin: 0 5px;
+      background: #333;
+      color: white;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  {% if direction == "rtl" %}
+    <div class="sidebar">
+      <div class="nav-buttons">
+        {% set prev_page = "%03d"|format((page|int) - 1) %}
+        {% set next_page = "%03d"|format((page|int) + 1) %}
+        <a href="/page/{{ prev_page }}">الصفحة السابقة</a>
+        <a href="/page/{{ next_page }}">الصفحة التالية</a>
+      </div>
+      {% for item in items %}
+        <div class="entry">
+          <strong>الآية:</strong> {{ item.location["الآية"] }} - {{ item.location["السورة"] }}<br>
+          <strong>الكلمة:</strong> {{ item["الكلمة"] }}<br>
+          <strong>الأخرى:</strong> {{ item["الأخرى"] }}<br>
+          <strong>الاختلاف:</strong> {{ item["الاختلاف"] }}<br>
+          <strong>المخالفون:</strong> {{ item["المخالفون"] }}<br>
+          <strong>الموافقون:</strong> {{ item["الموافقون"] }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="image-container">
+      <img src="{{ image_url }}" alt="صفحة المصحف">
+    </div>
+  {% else %}
+    <div class="image-container">
+      <img src="{{ image_url }}" alt="صفحة المصحف">
+    </div>
+    <div class="sidebar">
+      <div class="nav-buttons">
+        {% set prev_page = "%03d"|format((page|int) - 1) %}
+        {% set next_page = "%03d"|format((page|int) + 1) %}
+        <a href="/page/{{ prev_page }}">الصفحة السابقة</a>
+        <a href="/page/{{ next_page }}">الصفحة التالية</a>
+      </div>
+      {% for item in items %}
+        <div class="entry">
+          <strong>الآية:</strong> {{ item.location["الآية"] }} - {{ item.location["السورة"] }}<br>
+          <strong>الكلمة:</strong> {{ item["الكلمة"] }}<br>
+          <strong>الأخرى:</strong> {{ item["الأخرى"] }}<br>
+          <strong>الاختلاف:</strong> {{ item["الاختلاف"] }}<br>
+          <strong>المخالفون:</strong> {{ item["المخالفون"] }}<br>
+          <strong>الموافقون:</strong> {{ item["الموافقون"] }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</body>
+</html>
+
